@@ -25,7 +25,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import Section from './src/components/Section';
 
-import routes from './src/routes';
+import routes from './src/routes/tabnav';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -33,6 +33,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import InspireMe from './src/screens/InspireMe';
 import Splash from './src/screens/Splash';
 import Master from './src/containers';
+import NavigationBar from './src/containers/NavigationBar';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const App = () => {
@@ -56,16 +57,30 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Splash"
-        screenOptions={{headerShown: false}}>
-        {routes.map(({name, Component, master, header}, i) => (
+        screenOptions={{headerShown: false, animation: 'none'}}>
+        {routes.map(({name, Component, master, header, navbar, parent}, i) => (
           <Stack.Screen name={name} options={{title: name}} key={i}>
-            {props =>
-              master ? (
-                <Master {...props} Component={Component} header={header} />
-              ) : (
-                <Component {...props} header={header}/>
-              )
-            }
+            {props => (
+              <>
+                {master ? (
+                  <Master
+                    {...props}
+                    Component={Component}
+                    header={header}
+                    title={name}
+                  />
+                ) : (
+                  <Component {...props} header={header} />
+                )}
+                {navbar ||
+                  (navbar === undefined && (
+                    <NavigationBar
+                      activeRouteName={name}
+                      parentRouteName={parent}
+                    />
+                  ))}
+              </>
+            )}
           </Stack.Screen>
         ))}
       </Stack.Navigator>

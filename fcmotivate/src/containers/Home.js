@@ -20,7 +20,7 @@ const Tab = createBottomTabNavigator();
 const Home = ({navigation}) => {
   return (
     <Tab.Navigator
-      initialRouteName="Inspire Me"
+      initialRouteName="InspireMe"
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
@@ -34,22 +34,32 @@ const Home = ({navigation}) => {
           color: '#f7f7ef',
         },
       }}>
-      {routes.map(({name, Component, Icon, ActiveIcon, header}, i) => (
-        <Tab.Screen
-          key={i}
-          name={name}
-          options={{
-            title: name,
-            tabBarIcon: ({focused, color, size}) =>
-              focused ? (
-                <ActiveIcon width={20} height={20} />
-              ) : (
-                <Icon width={20} height={20} />
-              ),
-          }}>
-          {props => <Master {...props} Component={Component} header={header} title={name}/>}
-        </Tab.Screen>
-      ))}
+      {routes.map(
+        ({name, Component, Icon, ActiveIcon, header, has_icon}, i) =>
+          has_icon && (
+            <Tab.Screen
+              key={i}
+              name={name}
+              options={{
+                title: name,
+                tabBarIcon: ({focused, color, size}) =>
+                  focused ? (
+                    <ActiveIcon width={20} height={20} />
+                  ) : (
+                    <Icon width={20} height={20} />
+                  ),
+              }}>
+              {props => (
+                <Master
+                  {...props}
+                  Component={Component}
+                  header={header}
+                  title={name}
+                />
+              )}
+            </Tab.Screen>
+          ),
+      )}
     </Tab.Navigator>
   );
 };

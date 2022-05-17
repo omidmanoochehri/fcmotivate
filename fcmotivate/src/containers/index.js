@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Header from '../containers/Header';
 import bg from '../utils/img/app_background_image.png';
+import NavigationBar from './NavigationBar';
 
 const Master = ({Component, header, title}) => {
   const isDarkMode = true; //useColorScheme() === 'dark';
@@ -25,6 +26,8 @@ const Master = ({Component, header, title}) => {
   return (
     <SafeAreaView style={{backgroundColor: '#262C30'}}>
       <ImageBackground source={bg} resizeMode="cover">
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        {header && <Header title={title} />}
         <ScrollView
           // style={{
           //   display: 'flex',
@@ -34,8 +37,6 @@ const Master = ({Component, header, title}) => {
           // }}
           contentInsetAdjustmentBehavior="automatic"
           style={backgroundStyle}>
-          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-          {header && <Header title={title} />}
           <Component />
         </ScrollView>
       </ImageBackground>

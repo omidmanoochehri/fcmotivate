@@ -21,7 +21,8 @@ const Splash = ({navigation}) => {
   const checkAuth = async () => {
     const credentials = Keychain.getGenericPassword();
     if (credentials) {
-      navigation.navigate('Home', {name: 'Home'});
+      // navigation.navigate('Home', {name: 'Home'});
+      navigation.navigate('SelectPosition', {name: 'SelectPosition'});
     } else {
       navigation.navigate('LoginRegister', {name: 'LoginRegister'});
     }

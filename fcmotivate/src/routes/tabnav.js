@@ -1,5 +1,18 @@
 /* eslint-disable prettier/prettier */
+import Home from '../containers/Home';
 import InspireMe from '../screens/InspireMe';
+import LoginRegister from '../screens/LoginRegister';
+import Splash from '../screens/Splash';
+import SelectPosition from '../screens/SelectPostion';
+import SelectCategories from '../screens/SelectCategories';
+import RecoverMe from '../screens/RecoverMe';
+import QuoteSettings from '../screens/QuoteSettings';
+import MentalTraining from '../screens/MentalTraining';
+import GetMeFit from '../screens/GetMeFit';
+import POV from '../screens/POV';
+import TrainMe from '../screens/TrainMe';
+import MotivateMe from '../screens/MotivateMe';
+import Quotes from '../screens/Quotes';
 import InspireMeIcon from '../utils/svg/inspire_me.svg';
 import GetMeFitIcon from '../utils/svg/get_me_fit.svg';
 import TrainMeIcon from '../utils/svg/train_me.svg';
@@ -13,39 +26,111 @@ import POVActiveIcon from '../utils/svg/pov_active.svg';
 
 const routes = [
   {
-    name: 'Inspire Me',
+    name: 'Splash',
+    Component: Splash,
+    master: false,
+    has_icon: false,
+    navbar: false,
+  },
+  {
+    name: 'LoginRegister',
+    Component: LoginRegister,
+    master: true,
+    header: false,
+    has_icon: false,
+    navbar: false,
+  },
+  {
+    name: 'SelectPosition',
+    Component: SelectPosition,
+    master: true,
+    header: false,
+    has_icon: false,
+    navbar: false,
+  },
+  {
+    name: 'SelectCategories',
+    Component: SelectCategories,
+    master: true,
+    header: false,
+    has_icon: false,
+    navbar: false,
+  },
+  {
+    name: 'QuoteSettings',
+    Component: QuoteSettings,
+    master: true,
+    header: false,
+    has_icon: false,
+  },
+  {
+    name: 'RecoverMe',
+    Component: RecoverMe,
+    master: true,
+    header: true,
+    has_icon: false,
+    parent: 'InspireMe',
+  },
+  {
+    name: 'InspireMe',
     Component: InspireMe,
     Icon: InspireMeIcon,
     ActiveIcon: InspireMeActiveIcon,
+    master: true,
     header: true,
+    has_icon: true,
   },
   {
-    name: 'Get Me Fit',
-    Component: InspireMe,
+    name: 'GetMeFit',
+    Component: GetMeFit,
     Icon: GetMeFitIcon,
     ActiveIcon: GetMeFitActiveIcon,
+    master: true,
     header: true,
+    has_icon: true,
   },
   {
-    name: 'Train Me',
-    Component: InspireMe,
+    name: 'TrainMe',
+    Component: TrainMe,
     Icon: TrainMeIcon,
     ActiveIcon: TrainMeActiveIcon,
-    header: false,
+    master: true,
+    header: true,
+    has_icon: true,
   },
   {
-    name: 'Mental Training',
-    Component: InspireMe,
+    name: 'MentalTraining',
+    Component: MentalTraining,
     Icon: MentalTrainingIcon,
     ActiveIcon: MentalTrainingActiveIcon,
-    header: false,
+    master: true,
+    header: true,
+    has_icon: true,
   },
   {
     name: 'POV',
-    Component: InspireMe,
+    Component: POV,
     Icon: POVIcon,
     ActiveIcon: POVActiveIcon,
-    header: false,
+    master: true,
+    header: true,
+    has_icon: true,
+  },
+  {
+    name: 'MotivateMe',
+    Component: MotivateMe,
+    master: true,
+    header: true,
+    has_icon: false,
+    parent: 'InspireMe',
+  },
+  {
+    name: 'Quotes',
+    Component: Quotes,
+    master: true,
+    header: true,
+    has_icon: false,
+    parent: 'InspireMe',
   },
 ];
 

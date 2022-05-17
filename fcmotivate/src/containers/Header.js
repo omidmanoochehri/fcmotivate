@@ -6,7 +6,7 @@ import Menu from '../utils/svg/menu.svg';
 
 const Header = ({title}) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} stickyHeaderIndices={[0]}>
       <Logo style={styles.logo} width={50} height={50} />
       <Text style={styles.title}>{title}</Text>
       <TouchableOpacity style={styles.menu}>
@@ -27,7 +27,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     height: 80,
-    position: 'relative',
+    position: 'absolute',
+    flex: 1,
+    top: 0,
+    zIndex: 999,
+    width: '100%',
+    // backgroundColor: '#000',
   },
   logo: {
     position: 'absolute',
