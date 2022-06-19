@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import bg from '../utils/img/splash_bg.jpg';
-import Logo from '../utils/svg/logo-full.svg';
+import Logo from '../utils/svg/logo2.svg';
 import * as Keychain from 'react-native-keychain';
 
 const Splash = ({navigation}) => {

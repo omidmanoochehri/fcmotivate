@@ -26,6 +26,7 @@ import POVActiveIcon from '../utils/svg/pov_active.svg';
 import HomeRecovery from '../screens/HomeRecovery';
 import WithTheBall from '../screens/WithTheBall';
 import WithoutTheBall from '../screens/WithoutTheBall';
+import MyProfile from '../screens/MyProfile';
 
 const routes = [
   {
@@ -64,6 +65,13 @@ const routes = [
     Component: QuoteSettings,
     master: true,
     header: false,
+    has_icon: false,
+  },
+  {
+    name: 'MyProfile',
+    Component: MyProfile,
+    master: true,
+    header: true,
     has_icon: false,
   },
   {

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import {NavigationContainer} from '@react-navigation/native';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -12,9 +12,11 @@ import {
 import Header from '../containers/Header';
 import bg from '../utils/img/app_background_image.png';
 import NavigationBar from './NavigationBar';
+import Sidebar from './Sidebar';
 
 const Master = ({Component, header, title}) => {
   const isDarkMode = true; //useColorScheme() === 'dark';
+  const [showSidebar, openSidebar] = useState(false);
 
   const backgroundStyle = {
     // backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -27,7 +29,10 @@ const Master = ({Component, header, title}) => {
     <SafeAreaView style={{backgroundColor: '#262C30'}}>
       <ImageBackground source={bg} resizeMode="cover">
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        {header && <Header title={title} />}
+        {header && <Header title={title} openSidebar={openSidebar} />}
+        {header && (
+          <Sidebar showSidebar={showSidebar} openSidebar={openSidebar} />
+        )}
         <ScrollView
           // style={{
           //   display: 'flex',

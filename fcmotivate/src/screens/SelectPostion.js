@@ -30,7 +30,9 @@ const SelectPostion = () => {
       let index = selectedPositions.indexOf(pos);
       newPostionsList.splice(index, 1);
     } else {
-      newPostionsList.push(pos);
+      if (selectedPositions.length < 3) {
+        newPostionsList.push(pos);
+      }
     }
     return setSelectedPositions(newPostionsList);
   };

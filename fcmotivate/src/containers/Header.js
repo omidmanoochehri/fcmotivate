@@ -1,16 +1,27 @@
 /* eslint-disable prettier/prettier */
+import {useNavigation, useRoute} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import Logo from '../utils/svg/logo.svg';
+import Logo from '../utils/svg/logo2.svg';
 import Menu from '../utils/svg/menu.svg';
+import Profile from '../utils/svg/profile.svg';
+import ProfileActive from '../utils/svg/profile_active.svg';
 
-const Header = ({title}) => {
+const Header = ({title, openSidebar}) => {
+  const navigation = useNavigation();
+  const route = useRoute();
   return (
     <View style={styles.container} stickyHeaderIndices={[0]}>
       <Logo style={styles.logo} width={50} height={50} />
       <Text style={styles.title}>{title}</Text>
-      <TouchableOpacity style={styles.menu}>
-        <Menu width={20} height={20} />
+      <TouchableOpacity
+        style={styles.profile_btn}
+        onPress={() => navigation.navigate('MyProfile', {name: 'MyProfile'})}>
+        {route.name === 'MyProfile' ? (
+          <ProfileActive width={20} height={20} />
+        ) : (
+          <Profile width={20} height={20} />
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -47,6 +58,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 20,
     backgroundColor: '#353A3E',
+    borderRadius: 7,
+    padding: 10,
+  },
+  profile_btn: {
+    position: 'absolute',
+    right: 20,
     borderRadius: 7,
     padding: 10,
   },
