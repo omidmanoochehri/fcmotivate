@@ -28,7 +28,7 @@ const LoginRegister = () => {
 
   const doLogin = values => {
     Keychain.setGenericPassword(values.email, values.password).then(
-      navigation.navigate('Home', {name: 'Home'}),
+      navigation.navigate('SelectPosition', {name: 'SelectPosition'}),
     );
   };
 

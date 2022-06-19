@@ -22,7 +22,8 @@ const Splash = ({navigation}) => {
     const credentials = Keychain.getGenericPassword();
     if (credentials) {
       // navigation.navigate('Home', {name: 'Home'});
-      navigation.navigate('SelectPosition', {name: 'SelectPosition'});
+      // navigation.navigate('SelectPosition', {name: 'SelectPosition'});
+      navigation.navigate('LoginRegister', {name: 'LoginRegister'});
     } else {
       navigation.navigate('LoginRegister', {name: 'LoginRegister'});
     }

@@ -23,6 +23,7 @@ import GetMeFitActiveIcon from '../utils/svg/get_me_fit_active.svg';
 import TrainMeActiveIcon from '../utils/svg/train_me_active.svg';
 import MentalTrainingActiveIcon from '../utils/svg/mental_training_active.svg';
 import POVActiveIcon from '../utils/svg/pov_active.svg';
+import HomeRecovery from '../screens/HomeRecovery';
 
 const routes = [
   {
@@ -92,6 +93,13 @@ const routes = [
     Component: MentalTraining,
     Icon: MentalTrainingIcon,
     ActiveIcon: MentalTrainingActiveIcon,
+    master: true,
+    header: true,
+    has_icon: true,
+  },
+  {
+    name: 'HomeRecovery',
+    Component: HomeRecovery,
     master: true,
     header: true,
     has_icon: true,

@@ -23,6 +23,9 @@ import GetMeFitActiveIcon from '../utils/svg/get_me_fit_active.svg';
 import TrainMeActiveIcon from '../utils/svg/train_me_active.svg';
 import MentalTrainingActiveIcon from '../utils/svg/mental_training_active.svg';
 import POVActiveIcon from '../utils/svg/pov_active.svg';
+import HomeRecovery from '../screens/HomeRecovery';
+import WithTheBall from '../screens/WithTheBall';
+import WithoutTheBall from '../screens/WithoutTheBall';
 
 const routes = [
   {
@@ -90,6 +93,20 @@ const routes = [
     has_icon: true,
   },
   {
+    name: 'WithTheBall',
+    Component: WithTheBall,
+    master: true,
+    header: true,
+    has_icon: false,
+  },
+  {
+    name: 'WithoutTheBall',
+    Component: WithoutTheBall,
+    master: true,
+    header: true,
+    has_icon: false,
+  },
+  {
     name: 'TrainMe',
     Component: TrainMe,
     Icon: TrainMeIcon,
@@ -106,6 +123,13 @@ const routes = [
     master: true,
     header: true,
     has_icon: true,
+  },
+  {
+    name: 'HomeRecovery',
+    Component: HomeRecovery,
+    master: true,
+    header: true,
+    has_icon: false,
   },
   {
     name: 'POV',

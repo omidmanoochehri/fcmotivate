@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     top: 0,
     zIndex: 999,
     width: '100%',
-    // backgroundColor: '#000',
+    backgroundColor: '#000',
   },
   logo: {
     position: 'absolute',
