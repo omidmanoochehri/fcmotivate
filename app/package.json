@@ -1,14 +1,49 @@
 {
-  "name": "app",
-  "version": "0.0.0",
+  "name": "fcmotivate",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "start-reset-cache": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
+    "clean-run-android": "cd android && gradlew clean && cd.. && react-native run-android  ",
+    "reset": "rm -rf node_modules/ && npm cache clear && watchman watch-del-all && npm i",
+    "debug-build": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleDebug && cd app/src/main/res/ && rmdir /S /Q raw && rmdir /S /Q drawable-mdpi",
+    "release-build": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && cd android && ./gradlew assembleRelease && cd..",
+    "install-apk": "cd android && ./gradlew installRelease",
+    "release-aab": "cd android && ./gradlew bundleRelease",
+    "test": "jest",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "morgan": "~1.9.1"
+    "@react-navigation/bottom-tabs": "^6.2.0",
+    "@react-navigation/native": "^6.0.6",
+    "@react-navigation/native-stack": "^6.5.0",
+    "formik": "^2.2.9",
+    "react": "17.0.2",
+    "react-native": "0.66.4",
+    "react-native-keychain": "^8.0.0",
+    "react-native-linear-gradient": "^2.5.6",
+    "react-native-push-notification": "^8.1.1",
+    "react-native-safe-area-context": "^3.4.0",
+    "react-native-screens": "^3.11.1",
+    "react-native-svg": "^12.1.1",
+    "react-native-svg-transformer": "^1.0.0",
+    "react-native-video": "https://github.com/MatrixFrog/react-native-video#11ca8a6799f932a5f24da85dfe68c696ad13a753",
+    "react-navigation": "^4.4.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/runtime": "^7.12.5",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "babel-jest": "^26.6.3",
+    "eslint": "7.14.0",
+    "jest": "^26.6.3",
+    "metro-react-native-babel-preset": "^0.66.2",
+    "react-test-renderer": "17.0.2"
+  },
+  "jest": {
+    "preset": "react-native"
   }
 }
