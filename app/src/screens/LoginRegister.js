@@ -24,12 +24,16 @@ import * as Keychain from 'react-native-keychain';
 
 const LoginRegister = () => {
   const [isRegister, setIsRegister] = useState(true);
+  const [error, setError] = useState(null);
+  const [isVerificationSent, setIsVerificationSent] = useState(false);
   const navigation = useNavigation();
 
   const doLogin = values => {
-    Keychain.setGenericPassword(values.email, values.password).then(
-      navigation.navigate('SelectPosition', {name: 'SelectPosition'}),
-    );
+    setError('The username or password is invalid!');
+
+    // Keychain.setGenericPassword(values.email, values.password).then(
+    //   navigation.navigate('SelectPosition', {name: 'SelectPosition'}),
+    // );
   };
 
   return (
@@ -62,6 +66,7 @@ const LoginRegister = () => {
                 style={styles.tabBtn}
                 onPress={() => {
                   setIsRegister(true);
+                  setIsVerificationSent(false);
                 }}>
                 {/* <TabBtnBg style={styles.tab_btn_bg} width={250} height={150} /> */}
                 {isRegister ? (
@@ -81,90 +86,154 @@ const LoginRegister = () => {
 
             {isRegister ? (
               <View style={styles.tab}>
-                <Formik
-                  initialValues={{email: ''}}
-                  onSubmit={values => console.log(values)}>
-                  {({handleChange, handleBlur, handleSubmit, values}) => (
-                    <View>
-                      <ImageBackground
-                        style={styles.form_field}
-                        source={input_bg}
-                        resizeMode="stretch">
-                        <TextInput
-                          onChangeText={handleChange('email')}
-                          onBlur={handleBlur('email')}
-                          value={values.email}
-                          placeholder="Email"
-                          style={styles.input}
-                          placeholderTextColor={'#797979'}
-                        />
-                      </ImageBackground>
-
-                      <ImageBackground
-                        style={styles.form_field}
-                        source={input_bg}
-                        resizeMode="stretch">
-                        <TextInput
-                          onChangeText={handleChange('phonenumber')}
-                          onBlur={handleBlur('phonenumber')}
-                          value={values.phonenumber}
-                          placeholder="Phone Number"
-                          style={styles.input}
-                          placeholderTextColor={'#797979'}
-                        />
-                      </ImageBackground>
-
-                      <ImageBackground
-                        style={styles.form_field}
-                        source={input_bg}
-                        resizeMode="stretch">
-                        <TextInput
-                          onChangeText={handleChange('password')}
-                          onBlur={handleBlur('password')}
-                          value={values.password}
-                          placeholder="Password"
-                          style={styles.input}
-                          secureTextEntry
-                          placeholderTextColor={'#797979'}
-                        />
-                      </ImageBackground>
-
-                      <ImageBackground
-                        style={styles.form_field}
-                        source={input_bg}
-                        resizeMode="stretch">
-                        <TextInput
-                          onChangeText={handleChange('confirm_password')}
-                          onBlur={handleBlur('confirm_password')}
-                          value={values.confirm_password}
-                          placeholder="Repeat Password"
-                          style={styles.input}
-                          secureTextEntry
-                          placeholderTextColor={'#797979'}
-                        />
-                      </ImageBackground>
-
-                      <TouchableOpacity
-                        onPress={handleSubmit}
-                        style={styles.submit_btn}>
+                {!isVerificationSent ? (
+                  <Formik
+                    initialValues={{email: ''}}
+                    onSubmit={({
+                      email,
+                      phonenumber,
+                      password,
+                      confirm_password,
+                    }) => {
+                      if (
+                        email !== '' &&
+                        phonenumber !== '' &&
+                        password !== 'null' &&
+                        confirm_password !== 'null'
+                      ) {
+                        setIsVerificationSent(true);
+                      } else {
+                        setError('Please enter all the required fields!');
+                      }
+                    }}>
+                    {({handleChange, handleBlur, handleSubmit, values}) => (
+                      <View>
                         <ImageBackground
-                          source={submit_btn}
+                          style={styles.form_field}
+                          source={input_bg}
                           resizeMode="stretch">
-                          <View style={styles.submit_btn_view}>
-                            <Text style={styles.submit_btn_text}>
-                              Let's Start
-                            </Text>
-                          </View>
+                          <TextInput
+                            onChangeText={handleChange('email')}
+                            onBlur={handleBlur('email')}
+                            value={values.email}
+                            placeholder="Email"
+                            style={styles.input}
+                            placeholderTextColor={'#797979'}
+                          />
                         </ImageBackground>
-                      </TouchableOpacity>
 
-                      {/* <LinearGradient
+                        <ImageBackground
+                          style={styles.form_field}
+                          source={input_bg}
+                          resizeMode="stretch">
+                          <TextInput
+                            onChangeText={handleChange('phonenumber')}
+                            onBlur={handleBlur('phonenumber')}
+                            value={values.phonenumber}
+                            placeholder="Phone Number"
+                            style={styles.input}
+                            placeholderTextColor={'#797979'}
+                          />
+                        </ImageBackground>
+
+                        <ImageBackground
+                          style={styles.form_field}
+                          source={input_bg}
+                          resizeMode="stretch">
+                          <TextInput
+                            onChangeText={handleChange('password')}
+                            onBlur={handleBlur('password')}
+                            value={values.password}
+                            placeholder="Password"
+                            style={styles.input}
+                            secureTextEntry
+                            placeholderTextColor={'#797979'}
+                          />
+                        </ImageBackground>
+
+                        <ImageBackground
+                          style={styles.form_field}
+                          source={input_bg}
+                          resizeMode="stretch">
+                          <TextInput
+                            onChangeText={handleChange('confirm_password')}
+                            onBlur={handleBlur('confirm_password')}
+                            value={values.confirm_password}
+                            placeholder="Repeat Password"
+                            style={styles.input}
+                            secureTextEntry
+                            placeholderTextColor={'#797979'}
+                          />
+                        </ImageBackground>
+
+                        <TouchableOpacity
+                          onPress={handleSubmit}
+                          style={styles.submit_btn}>
+                          <ImageBackground
+                            source={submit_btn}
+                            resizeMode="stretch">
+                            <View style={styles.submit_btn_view}>
+                              <Text style={styles.submit_btn_text}>
+                                Send Verification Code
+                              </Text>
+                            </View>
+                          </ImageBackground>
+                        </TouchableOpacity>
+
+                        {/* <LinearGradient
                       colors={['#4c669f', '#3b5998', '#192f6a']}>
                       <Text>Sign in with Facebook</Text>
                     </LinearGradient> */}
-                    </View>
-                  )}
-                </Formik>
+                      </View>
+                    )}
+                  </Formik>
+                ) : (
+                  <Formik
+                    initialValues={{verification_code: ''}}
+                    onSubmit={values =>
+                      setError('The verification code is invalid!')
+                    }>
+                    {({handleChange, handleBlur, handleSubmit, values}) => (
+                      <View>
+                        <View>
+                          <Text style={{color:"#fff"}}>The verification code is sent to your email.</Text>
+                        </View>
+                        <ImageBackground
+                          style={styles.form_field}
+                          source={input_bg}
+                          resizeMode="stretch">
+                          <TextInput
+                            onChangeText={handleChange('verification_code')}
+                            onBlur={handleBlur('verification_code')}
+                            value={values.verification_code}
+                            placeholder="Verification Code"
+                            style={styles.input}
+                            placeholderTextColor={'#797979'}
+                          />
+                        </ImageBackground>
+
+                        <TouchableOpacity
+                          onPress={handleSubmit}
+                          style={styles.submit_btn}>
+                          <ImageBackground
+                            source={submit_btn}
+                            resizeMode="stretch">
+                            <View style={styles.submit_btn_view}>
+                              <Text style={styles.submit_btn_text}>
+                                Let's Start
+                              </Text>
+                            </View>
+                          </ImageBackground>
+                        </TouchableOpacity>
+
+                        {/* <LinearGradient
+                      colors={['#4c669f', '#3b5998', '#192f6a']}>
+                      <Text>Sign in with Facebook</Text>
+                    </LinearGradient> */}
+                      </View>
+                    )}
+                  </Formik>
+                )}
               </View>
             ) : (
               <View style={styles.tab}>
@@ -221,6 +290,11 @@ const LoginRegister = () => {
                     </View>
                   )}
                 </Formik>
+              </View>
+            )}
+            {error && (
+              <View style={styles.errorContainer}>
+                <Text style={styles.error}>{error}</Text>
               </View>
             )}
           </View>
@@ -302,5 +376,11 @@ const styles = StyleSheet.create({
   },
   submit_btn_text: {
     color: '#fff',
+  },
+  errorContainer: {
+    paddingVertical: 20,
+  },
+  error: {
+    color: 'red',
   },
 });
