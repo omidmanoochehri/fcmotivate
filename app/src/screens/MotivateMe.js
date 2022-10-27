@@ -11,7 +11,7 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import Video from 'react-native-video';
+// import Video from 'react-native-video';
 import {fetchAllPostsByType} from '../services/posts.service';
 import item_image from '../utils/img/recover-me-banner.jpg';
 const testVideo = require('../utils/video/test.mp4');

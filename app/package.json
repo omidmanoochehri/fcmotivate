@@ -31,7 +31,6 @@
     "react-native-screens": "^3.11.1",
     "react-native-svg": "^12.1.1",
     "react-native-svg-transformer": "^1.0.0",
-    "react-native-video": "https://github.com/MatrixFrog/react-native-video#11ca8a6799f932a5f24da85dfe68c696ad13a753",
     "react-navigation": "^4.4.4"
   },
   "devDependencies": {
