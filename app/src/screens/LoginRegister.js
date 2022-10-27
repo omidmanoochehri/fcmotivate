@@ -31,9 +31,9 @@ const LoginRegister = () => {
   const doLogin = values => {
     setError('The username or password is invalid!');
 
-    // Keychain.setGenericPassword(values.email, values.password).then(
-    //   navigation.navigate('SelectPosition', {name: 'SelectPosition'}),
-    // );
+    Keychain.setGenericPassword(values.email, values.password).then(
+      navigation.navigate('SelectPosition', {name: 'SelectPosition'}),
+    );
   };
 
   return (
@@ -190,13 +190,13 @@ const LoginRegister = () => {
                 ) : (
                   <Formik
                     initialValues={{verification_code: ''}}
-                    onSubmit={values =>
-                      setError('The verification code is invalid!')
-                    }>
+                    onSubmit={values => doLogin(values)}>
                     {({handleChange, handleBlur, handleSubmit, values}) => (
                       <View>
                         <View>
-                          <Text style={{color:"#fff"}}>The verification code is sent to your email.</Text>
+                          <Text style={{color: '#fff'}}>
+                            The verification code is sent to your email.
+                          </Text>
                         </View>
                         <ImageBackground
                           style={styles.form_field}

@@ -9,17 +9,21 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  FlatList,
 } from 'react-native';
 import Video from 'react-native-video';
+import {fetchAllPostsByType} from '../services/posts.service';
 import item_image from '../utils/img/recover-me-banner.jpg';
 const testVideo = require('../utils/video/test.mp4');
 const testVideoPoster = require('../utils/img/recover-me-banner.jpg');
 import Play from '../utils/svg/play.svg';
+
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 
 const MotivateMe = ({props}) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [posts, setPosts] = useState([]);
   const navigation = useNavigation();
   const videoPlayer = useRef();
 
@@ -28,6 +32,14 @@ const MotivateMe = ({props}) => {
       videoPlayer.current.presentFullscreenPlayer();
     }
   };
+
+  useEffect(() => {
+    fetchAllPostsByType('motivate_me', data => {
+      if (data.result && data.response.length) {
+        setPosts(data.response);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (isPlaying) {
@@ -55,43 +67,44 @@ const MotivateMe = ({props}) => {
         justifyContent: 'center',
         padding: 0,
         paddingTop: 70,
+        paddingBottom: 190,
       }}>
       <View style={{paddingVertical: 20}}>
         <View style={styles.items_section}>
-          <View style={styles.items_row}>
-            <TouchableOpacity style={styles.item_box}>
-              <Image style={styles.item_image} source={item_image} />
-              <Text style={styles.item_title}>Test 1</Text>
-              <Text style={styles.item_description}>
-                Lorem impsum lomoue...
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.item_box}>
-              <Image style={styles.item_image} source={item_image} />
-              <Text style={styles.item_title}>Test 1</Text>
-              <Text style={styles.item_description}>
-                Lorem impsum lomoue...
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.items_row}>
-            <TouchableOpacity style={styles.item_box}>
-              <Image style={styles.item_image} source={item_image} />
-              <Text style={styles.item_title}>Test 1</Text>
-              <Text style={styles.item_description}>
-                Lorem impsum lomoue...
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.item_box}>
-              <Image style={styles.item_image} source={item_image} />
-              <Text style={styles.item_title}>Test 1</Text>
-              <Text style={styles.item_description}>
-                Lorem impsum lomoue...
-              </Text>
-            </TouchableOpacity>
-          </View>
+          {(() => {
+            let posts_html;
+            let i = 1;
+            let rows_count = posts.length / 2;
+            while (i < rows_count) {
+              let post1 = posts[rows_count * 2];
+              let post2 = posts[rows_count * 2];
+
+              posts_html += (
+                <View style={styles.items_row}>
+                  <TouchableOpacity style={styles.item_box}>
+                    <Image style={styles.item_image} source={post1.image} />
+                    <Text style={styles.item_title}>{post1.title}</Text>
+                    <Text style={styles.item_description}>
+                      {post1.content.substring(0, 22)}...
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.item_box}>
+                    <Image style={styles.item_image} source={post2.image} />
+                    <Text style={styles.item_title}>{post2.title}</Text>
+                    <Text style={styles.item_description}>
+                      {post2.content.substring(0, 22)}...
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              );
+
+              i++;
+            }
+
+            return posts_html;
+          })()}
         </View>
-        <View style={styles.main_banner_container}>
+        {/* <View style={styles.main_banner_container}>
           <Video
             source={testVideo}
             ref={ref => (videoPlayer.current = ref)}
@@ -113,7 +126,7 @@ const MotivateMe = ({props}) => {
               <Play width={50} height={50} />
             </TouchableOpacity>
           )}
-        </View>
+        </View> */}
       </View>
     </View>
   );
