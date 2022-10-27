@@ -8,7 +8,7 @@ export const fetchAllPostsByType = async (type, callback) => {
   try {
     const response = await fetch(GLOBALS.BASE_URL + 'posts/' + type);
     const data = await response.json();
-    return callback({result: true, reponse: data});
+    return callback({result: true, response: data});
   } catch (error) {
     console.error(error);
     return callback({result: false, response: error});

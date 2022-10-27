@@ -21,6 +21,7 @@ import submit_btn from '../utils/img/button-dark.png';
 import {useNavigation} from '@react-navigation/native';
 // import { LinearGradient } from 'expo-linear-gradient';
 import * as Keychain from 'react-native-keychain';
+import {login} from '../services/user.service';
 
 const LoginRegister = () => {
   const [isRegister, setIsRegister] = useState(true);
@@ -29,11 +30,17 @@ const LoginRegister = () => {
   const navigation = useNavigation();
 
   const doLogin = values => {
-    setError('The username or password is invalid!');
-
-    Keychain.setGenericPassword(values.email, values.password).then(
-      navigation.navigate('SelectPosition', {name: 'SelectPosition'}),
-    );
+    setError('');
+    login(values.email, values.password, ({result, response}) => {
+      console.log('res', response);
+      if (result && response.token) {
+        Keychain.setGenericPassword(values.email, values.password).then(
+          navigation.navigate('SelectPosition', {name: 'SelectPosition'}),
+        );
+      } else {
+        setError('The username or password is invalid!');
+      }
+    });
   };
 
   return (
@@ -292,11 +299,11 @@ const LoginRegister = () => {
                 </Formik>
               </View>
             )}
-            {error && (
+            {
               <View style={styles.errorContainer}>
                 <Text style={styles.error}>{error}</Text>
               </View>
-            )}
+            }
           </View>
         </View>
       </ImageBackground>

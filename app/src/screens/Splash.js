@@ -10,24 +10,27 @@ import {
 import bg from '../utils/img/splash_bg.jpg';
 import Logo from '../utils/svg/logo2.svg';
 import * as Keychain from 'react-native-keychain';
+import {login} from '../services/user.service';
 
 const Splash = ({navigation}) => {
-  useEffect(() => {
-    setTimeout(() => {
-      checkAuth();
-    }, 3000);
-  }, []);
-
-  const checkAuth = async () => {
-    const credentials = Keychain.getGenericPassword();
+  const checkCredentials = async () => {
+    const credentials = await Keychain.getGenericPassword();
     if (credentials) {
-      // navigation.navigate('Home', {name: 'Home'});
-      // navigation.navigate('SelectPosition', {name: 'SelectPosition'});
-      navigation.navigate('LoginRegister', {name: 'LoginRegister'});
-    } else {
-      navigation.navigate('LoginRegister', {name: 'LoginRegister'});
+      login(
+        credentials.username,
+        credentials.password,
+        ({result, response}) => {
+          if (result && response.token) {
+            navigation.navigate('SelectPosition', {name: 'SelectPosition'});
+          }
+        },
+      );
     }
   };
+
+  useEffect(() => {
+    checkCredentials();
+  }, []);
 
   return (
     <SafeAreaView>

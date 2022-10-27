@@ -35,7 +35,8 @@ const MotivateMe = ({props}) => {
 
   useEffect(() => {
     fetchAllPostsByType('motivate_me', data => {
-      if (data.result && data.response.length) {
+      console.log('data', data);
+      if (data.result && data.response?.length) {
         setPosts(data.response);
       }
     });
@@ -71,38 +72,17 @@ const MotivateMe = ({props}) => {
       }}>
       <View style={{paddingVertical: 20}}>
         <View style={styles.items_section}>
-          {(() => {
-            let posts_html;
-            let i = 1;
-            let rows_count = posts.length / 2;
-            while (i < rows_count) {
-              let post1 = posts[rows_count * 2];
-              let post2 = posts[rows_count * 2];
-
-              posts_html += (
-                <View style={styles.items_row}>
-                  <TouchableOpacity style={styles.item_box}>
-                    <Image style={styles.item_image} source={post1.image} />
-                    <Text style={styles.item_title}>{post1.title}</Text>
-                    <Text style={styles.item_description}>
-                      {post1.content.substring(0, 22)}...
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.item_box}>
-                    <Image style={styles.item_image} source={post2.image} />
-                    <Text style={styles.item_title}>{post2.title}</Text>
-                    <Text style={styles.item_description}>
-                      {post2.content.substring(0, 22)}...
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              );
-
-              i++;
-            }
-
-            return posts_html;
-          })()}
+          {posts.map((row,i) => (
+            <View style={styles.items_row} key={i}>
+              <TouchableOpacity style={styles.item_box}>
+                <Image style={styles.item_image} source={{uri:row.cover}} />
+                <Text style={styles.item_title}>{row.title}</Text>
+                <Text style={styles.item_description}>
+                  {row.content?.substring(0, 22)}...
+                </Text>
+              </TouchableOpacity>
+            </View>
+          ))}
         </View>
         {/* <View style={styles.main_banner_container}>
           <Video

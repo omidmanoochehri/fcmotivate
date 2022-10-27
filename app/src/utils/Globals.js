@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 const Globals = {
-  BASE_URL: 'http://cactusgroup.nl/',
+  BASE_URL: 'https://cactusgroup.nl/',
   STRIPE_PUBLISHABLE_KEY:"",
   STRIPE_MERCHANT_IDENTIFIER:"",
   COLOR: {
