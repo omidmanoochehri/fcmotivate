@@ -37,3 +37,21 @@ export const login = async (username, password, callback) => {
     return callback({result: false, response: error});
   }
 };
+
+export const signup = async (user_data, callback) => {
+  try {
+    const response = await fetch(GLOBALS.BASE_URL + 'users/signup', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user_data),
+    });
+    const data = await response.json();
+    return callback({result: true, response: data});
+  } catch (error) {
+    console.error(error);
+    return callback({result: false, response: error});
+  }
+};

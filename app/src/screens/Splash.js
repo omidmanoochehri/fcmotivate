@@ -13,15 +13,19 @@ import * as Keychain from 'react-native-keychain';
 import {login} from '../services/user.service';
 
 const Splash = ({navigation}) => {
+  
   const checkCredentials = async () => {
     const credentials = await Keychain.getGenericPassword();
     if (credentials) {
       login(
         credentials.username,
         credentials.password,
-        ({result, response}) => {
+        async ({result, response}) => {
           if (result && response.token) {
             navigation.navigate('SelectPosition', {name: 'SelectPosition'});
+          } else {
+            await Keychain.resetGenericPassword();
+            navigation.navigate('LoginRegister', {name: 'LoginRegister'});
           }
         },
       );

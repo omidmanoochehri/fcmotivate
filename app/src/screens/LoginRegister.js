@@ -21,13 +21,25 @@ import submit_btn from '../utils/img/button-dark.png';
 import {useNavigation} from '@react-navigation/native';
 // import { LinearGradient } from 'expo-linear-gradient';
 import * as Keychain from 'react-native-keychain';
-import {login} from '../services/user.service';
+import {login, signup} from '../services/user.service';
 
 const LoginRegister = () => {
   const [isRegister, setIsRegister] = useState(true);
   const [error, setError] = useState(null);
   const [isVerificationSent, setIsVerificationSent] = useState(false);
   const navigation = useNavigation();
+
+  const doSignUp = values => {
+    setError('');
+    signup(values, ({result, response}) => {
+      console.log('res', response);
+      if (result) {
+        setIsVerificationSent(true);
+      } else {
+        setError('Somthing went wrong! Please try again.');
+      }
+    });
+  };
 
   const doLogin = values => {
     setError('');
@@ -108,7 +120,15 @@ const LoginRegister = () => {
                         password !== 'null' &&
                         confirm_password !== 'null'
                       ) {
-                        setIsVerificationSent(true);
+                        if (password === confirm_password) {
+                          doSignUp({
+                            email,
+                            phonenumber,
+                            password
+                          });
+                        } else {
+                          setError('Passwords you entered are not match!');
+                        }
                       } else {
                         setError('Please enter all the required fields!');
                       }
